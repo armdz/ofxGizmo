@@ -9,6 +9,7 @@
 
 //--------------------------------------------------------------
 ofxGizmo::ofxGizmo() {
+    gizmo = NULL;
     // setup the gizmo //
     gizmoMove   = CreateMoveGizmo();
     gizmoRotate = CreateRotateGizmo();
@@ -87,12 +88,22 @@ void ofxGizmo::setNode( ofNode aNode ) {
 //--------------------------------------------------------------
 void ofxGizmo::draw( ofCamera &aCam ) {
     
+    
+    
     if ( gizmo && isVisible() ) {
         ofPushStyle(); {
+            
+            gizmoRotate->SetCameraMatrix(glm::value_ptr(aCam.getModelViewMatrix()), glm::value_ptr(aCam.getProjectionMatrix()));
+            gizmoMove->SetCameraMatrix(glm::value_ptr(aCam.getModelViewMatrix()), glm::value_ptr(aCam.getProjectionMatrix()));
+            gizmoScale->SetCameraMatrix(glm::value_ptr(aCam.getModelViewMatrix()), glm::value_ptr(aCam.getProjectionMatrix()));
+
+            
+            
+                /*
             gizmoRotate->SetCameraMatrix( aCam.getModelViewMatrix().getPtr(), aCam.getProjectionMatrix().getPtr() );
             gizmoMove->SetCameraMatrix( aCam.getModelViewMatrix().getPtr(), aCam.getProjectionMatrix().getPtr() );
             gizmoScale->SetCameraMatrix( aCam.getModelViewMatrix().getPtr(), aCam.getProjectionMatrix().getPtr() );
-            
+            */
             if(bNodeSet) {
 				ofDisableDepthTest();
 				ofDisableLighting();
